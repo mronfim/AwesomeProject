@@ -3,10 +3,12 @@ import { View, TouchableOpacity, Image, Text, ScrollView, Dimensions } from 'rea
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 import Post from './components/Post'
+import Header from './components/Header'
 
 const window = Dimensions.get('window');
 
 export default class HomePage extends Component {
+
   onPressSettings() {
     this.props.nav.push({name: 'settings'});
   }
@@ -18,11 +20,7 @@ export default class HomePage extends Component {
   render() {
     return (
       <View style={{flex: 1}}>
-        <View style={{flexDirection: 'row', padding: 10, paddingTop: 40, backgroundColor: 'orange', justifyContent: 'flex-end'}}>
-          <TouchableOpacity onPress={() => {this.onPressSettings()}}>
-            <Icon name="cog" size={20} color="white" />
-          </TouchableOpacity>
-        </View>
+        <Header nav={this.props.nav} />
         <ScrollView
           horizontal={true}
           pagingEnabled={true}

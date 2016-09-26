@@ -4,6 +4,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { StyleSheet } from 'react-native';
 
 import CommonStyles from '../styles/commonStyles';
+import Header from '../components/Header';
 
 export default class SettingsPage extends Component {
   _renderScene(route, nav) {
@@ -18,19 +19,7 @@ export default class SettingsPage extends Component {
   render() {
     return (
       <View style={[CommonStyles.page, styles.page]}>
-        <View style={[CommonStyles.pageHeader, styles.header]}>
-          <View style={{flex: 1, alignItems: 'center'}}>
-            <TouchableOpacity
-              onPress={() => {this.props.nav.pop()}}>
-              <Icon name="chevron-left" size={20} color="white" />
-            </TouchableOpacity>
-          </View>
-          <View style={{flex: 20, alignItems: 'center'}}>
-            <Text style={{color: 'white'}}>Settings</Text>
-          </View>
-          <View style={{flex: 1}}>
-          </View>
-        </View>
+        <Header nav={this.props.nav}/>
         <Navigator
           initialRoute={{depth: 0}}
           renderScene={(route, navigator) => {return this._renderScene(route, navigator)}}

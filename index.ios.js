@@ -12,6 +12,8 @@ import SettingsPage from './pages/SettingsPage';
 import ProfilePage from './pages/ProfilePage';
 import PostPage from './pages/PostPage';
 
+import Header from './components/Header'
+
 class AwesomeProject extends Component {
   render() {
     let routes = {
