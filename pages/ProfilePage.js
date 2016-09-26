@@ -31,14 +31,16 @@ export default class ProfilePage extends Component {
             </View>
           </View>
           <TabBar
-            style={styles.tabBar, {color: 'white'}}
+            barStyle={styles.tabBar}
+            iconColor='#a2a2a2'
+            activeIconColor='blue'
             onPressTab={(index) => {
               _horizScrollView.scrollTo({x: index * window.width});
             }}>
-            <Icon name='newspaper-o'/>
-            <Icon name='user'/>
-            <Icon name='envelope'/>
-            <Icon name='bell'/>
+            <Icon name='newspaper-o' label='newsfeed'/>
+            <Icon name='user' label='profile'/>
+            <Icon name='envelope' label='messages'/>
+            <Icon name='bell' label='notifications'/>
           </TabBar>
           <ScrollView
             ref={(scrollView) => {_horizScrollView = scrollView}}
@@ -106,8 +108,8 @@ var styles = StyleSheet.create({
   },
   tabBar: {
     borderBottomWidth: 0.5,
-    borderTopWidth: 0.5,
-    borderColor: '#ACACAC',
+    borderTopWidth: 0.0,
+    borderColor: 'rgba(0, 0, 0, 0.4)',
   },
   container: {
     flex: 1
@@ -153,7 +155,7 @@ class ColorAnimated extends Component {
         <Animated.View
           style={[styles.box, {backgroundColor: interpolatedColorAnimation}]}
         />
-    </TouchableOpacity>
+      </TouchableOpacity>
     );
   }
 }
