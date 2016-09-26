@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, TouchableOpacity, Image, Text, ScrollView, Dimensions } from 'react-native';
+import { View, TouchableOpacity, Image, Text, ScrollView, Dimensions, Animated } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { StyleSheet } from 'react-native';
 
@@ -8,6 +8,10 @@ import Header from '../components/Header';
 import TabBar from '../components/TabBar';
 
 export default class ProfilePage extends Component {
+  constructor(props) {
+    super(props);
+  }
+
   onPressSettings() {
     this.props.nav.push({name: 'settings'});
   }
@@ -27,14 +31,14 @@ export default class ProfilePage extends Component {
             </View>
           </View>
           <TabBar
-            style={styles.tabBar}
+            style={styles.tabBar, {color: 'white'}}
             onPressTab={(index) => {
               _horizScrollView.scrollTo({x: index * window.width});
             }}>
-            <Icon name='newspaper-o' size={20} color='#747474'/>
-            <Icon name='user' size={20} color='#747474'/>
-            <Icon name='envelope' size={20} color='#747474'/>
-            <Icon name='bell' size={20} color='#747474'/>
+            <Icon name='newspaper-o'/>
+            <Icon name='user'/>
+            <Icon name='envelope'/>
+            <Icon name='bell'/>
           </TabBar>
           <ScrollView
             ref={(scrollView) => {_horizScrollView = scrollView}}
@@ -44,7 +48,9 @@ export default class ProfilePage extends Component {
             style={{flex: 1}}>
 
             <View style={{width: window.width}}>
-              <View style={{height: 300, backgroundColor: '#D9D8D7'}}></View>
+              <View style={{height: 300, backgroundColor: '#D9D8D7'}}>
+                <ColorAnimated/>
+              </View>
               <View style={{height: 300, backgroundColor: '#ADAF97'}}></View>
               <View style={{height: 300, backgroundColor: '#BBD79F'}}></View>
             </View>
@@ -102,5 +108,52 @@ var styles = StyleSheet.create({
     borderBottomWidth: 0.5,
     borderTopWidth: 0.5,
     borderColor: '#ACACAC',
+  },
+  container: {
+    flex: 1
+  },
+  box: {
+    position: 'absolute',
+    top: 100,
+    left: 100,
+    width: 100,
+    height: 100
   }
 });
+
+
+class ColorAnimated extends Component {
+  componentWillMount() {
+    this.animatedValue = new Animated.Value(0);
+    this.forward = true;
+  }
+
+  onPressed() {
+    if (this.forward) {
+      Animated.timing(this.animatedValue, {
+        toValue: 100,
+        duration: 1000
+      }).start();
+    } else {
+      Animated.timing(this.animatedValue, {
+        toValue: 0,
+        duration: 1000
+      }).start();
+    }
+    this.forward = !this.forward;
+  }
+
+  render() {
+    let interpolatedColorAnimation = this.animatedValue.interpolate({
+      inputRange: [0, 100],
+      outputRange: ['rgba(255, 255, 255, 1)', 'rgba(0, 0, 0, 1)']
+    });
+    return (
+      <TouchableOpacity style={styles.container} onPress={() => this.onPressed()}>
+        <Animated.View
+          style={[styles.box, {backgroundColor: interpolatedColorAnimation}]}
+        />
+    </TouchableOpacity>
+    );
+  }
+}
