@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { View, TouchableOpacity, Image, Text, ScrollView, Dimensions, Animated } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import { View, TouchableOpacity, Text, ScrollView } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
 import { StyleSheet } from 'react-native';
 
 export default class TabBar extends Component {
@@ -21,21 +21,26 @@ export default class TabBar extends Component {
     this.refs['tabsContainer' + index].setState({ color: this.props.activeIconColor });
   }
 
+  renderTabs() {
+    return React.Children.map(this.props.children, (child, index) => {
+      return (
+        <Tab
+          ref={'tabsContainer' + index}
+          key={index}
+          index={index}
+          onChangeTab={(index) => this.changedTab(index)}
+          color={this.props.iconColor}
+          {...child.props}
+          {...this.props}>
+        </Tab>
+      )
+    });
+  }
+
   render() {
-    let tabs = this.props.children || [];
     return (
       <View style={[styles.bar, this.props.barStyle]}>
-        { tabs.map((tab, index) =>
-            <Tab
-              ref={'tabsContainer' + index}
-              key={index}
-              index={index}
-              onChangeTab={(index) => this.changedTab(index)}
-              color={this.props.iconColor}
-              {...tab.props}
-              {...this.props}>
-            </Tab>
-        ) }
+        { this.renderTabs() }
       </View>
     )
   }
@@ -56,7 +61,7 @@ class Tab extends Component {
     return (
         <TouchableOpacity onPress={() => this.onPressTab()} style={styles.tab}>
           <View style={styles.tabInnerView}>
-            <Icon name={this.props.name} size={20} color={this.state.color}/>
+            <Icon name={this.props.name} size={this.props.size} color={this.state.color}/>
             { this.props.label && <Text style={[styles.tabLabel, {color: this.state.color}]}>{this.props.label}</Text> }
           </View>
         </TouchableOpacity>
@@ -82,8 +87,7 @@ var styles = StyleSheet.create({
     justifyContent: 'center',
   },
   tabLabel: {
-    fontSize: 11,
+    fontSize: 10,
     fontWeight: '100',
-    marginTop: 3,
   },
 });

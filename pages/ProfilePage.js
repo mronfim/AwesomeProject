@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, TouchableOpacity, Image, Text, ScrollView, Dimensions, Animated } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-vector-icons/Ionicons';
 import { StyleSheet } from 'react-native';
 
 import CommonStyles from '../styles/commonStyles';
@@ -37,10 +37,10 @@ export default class ProfilePage extends Component {
             onPressTab={(index) => {
               _horizScrollView.scrollTo({x: index * window.width});
             }}>
-            <Icon name='newspaper-o' label='newsfeed'/>
-            <Icon name='user' label='profile'/>
-            <Icon name='envelope' label='messages'/>
-            <Icon name='bell' label='notifications'/>
+            <Icon name='md-paper' label='newsfeed' size={20}/>
+            <Icon name='md-contact' label='profile' size={20}/>
+            <Icon name='md-chatboxes' label='messages' size={20}/>
+            <Icon name='md-notifications' label='notifications' size={20}/>
           </TabBar>
           <ScrollView
             ref={(scrollView) => {_horizScrollView = scrollView}}
