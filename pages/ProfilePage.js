@@ -33,7 +33,7 @@ export default class ProfilePage extends Component {
           <TabBar
             barStyle={styles.tabBar}
             iconColor='#a2a2a2'
-            activeIconColor='blue'
+            activeIconColor='orange'
             onPressTab={(index) => {
               _horizScrollView.scrollTo({x: index * window.width});
             }}>
