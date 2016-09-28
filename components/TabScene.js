@@ -1,5 +1,13 @@
 import React, { Component } from 'react';
-import { View, ScrollView, Text, Dimensions, Animated, TouchableWithoutFeedback } from 'react-native';
+import {
+  View,
+  ScrollView,
+  Text,
+  Dimensions,
+  Animated,
+  TouchableWithoutFeedback,
+  TouchableOpacity
+} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { StyleSheet } from 'react-native';
 
@@ -22,7 +30,7 @@ export default class TabScene extends Component {
   onPressTab(index) {
     if (index === 2 && index === this.state.clickedTab) {
       this.hideAddContent();
-      this.tabBar.changedTab(this.state.activeTab);
+      this.tabBar.unpress();
     } else if (index === 2) {
       this.setState({clickedTab: index});
       this.showAddContent();
@@ -32,6 +40,11 @@ export default class TabScene extends Component {
       this.setState({activeTab: index});
       this.setState({clickedTab: index});
     }
+  }
+
+  onPressPopupBackground() {
+    this.hideAddContent();
+    this.tabBar.unpress();
   }
 
   showAddContent() {
@@ -92,21 +105,39 @@ export default class TabScene extends Component {
     });
   }
 
+  renderAddContentButton(icon, size, color, bgColor, label) {
+    return (
+      <TouchableOpacity
+        onPress={() => this.props.nav.push({name: 'new-post'})}
+        style={{justifyContent: 'center', alignItems: 'center'}}>
+        <View style={[styles.newPostButton, {
+            backgroundColor: bgColor,
+            width: size*2,
+            height: size*2,
+            borderRadius: size,
+          }]}>
+          <Icon name={icon} size={size} color={color} />
+        </View>
+        <Text style={{color: bgColor}}>{label}</Text>
+      </TouchableOpacity>
+    );
+  }
+
   renderAddContent() {
     return (
       <Animated.View
         style={[styles.darkBackground, {
           top: this.state.topValue
         }]}>
-        <TouchableWithoutFeedback onPress={() => {
-            this.hideAddContent();
-            this.tabBar.changedTab(this.state.activeTab);
-          }}>
+        <TouchableWithoutFeedback onPress={() => this.onPressPopupBackground()}>
           <Animated.View style={[styles.darkBackgroundButton, {
               opacity: this.state.opacityValue
             }]} />
         </TouchableWithoutFeedback>
-        <Animated.View style={[styles.popUp, {bottom: this.state.bottomValue}]} />
+        <Animated.View style={[styles.popUp, {bottom: this.state.bottomValue}]}>
+          {this.renderAddContentButton('md-paper', 32, 'white', '#35bfeb', 'New Post')}
+          {this.renderAddContentButton('md-map', 32, 'white', '#55ac7d', 'New Post')}
+        </Animated.View>
       </Animated.View>
     )
   }
@@ -158,6 +189,9 @@ var styles = StyleSheet.create({
     left: 0,
     opacity: 1,
     borderRadius: 5,
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    flexDirection: 'row',
   },
   darkBackground: {
     position: 'absolute',
@@ -172,5 +206,9 @@ var styles = StyleSheet.create({
     top: 0,
     bottom: 0,
     right: 0,
-  }
+  },
+  newPostButton: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 });

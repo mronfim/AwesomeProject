@@ -6,7 +6,10 @@ import { StyleSheet } from 'react-native';
 export default class TabBar extends Component {
   constructor(props) {
     super(props);
-    this.state = {activeTab: 0};
+    this.state = {
+      activeTab: 0,
+      lastActiveTab: 0,
+    };
   }
 
   changedTab(index) {
@@ -15,7 +18,12 @@ export default class TabBar extends Component {
       this.refs['tabsContainer' + oldIndex].setState({ color: this.props.iconColor });
       this.refs['tabsContainer' + index].setState({ color: this.props.activeIconColor });
       this.setState({activeTab: index});
+      this.setState({lastActiveTab: oldIndex});
     }
+  }
+
+  unpress() {
+    this.changedTab(this.state.lastActiveTab);
   }
 
   componentDidMount() {

@@ -11,6 +11,7 @@ import HomePage from './HomePage';
 import SettingsPage from './pages/SettingsPage';
 import ProfilePage from './pages/ProfilePage';
 import PostPage from './pages/PostPage';
+import NewPostPage from './pages/NewPostPage';
 
 import Router from './components/Router'
 import TabScene, { TabSceneItem } from './components/TabScene'
@@ -58,6 +59,7 @@ class AwesomeProject extends Component {
         <SettingsPage route='settings' />
         <ProfilePage route='profile' />
         <PostPage route='post' />
+        <NewPostPage route='new-post' />
       </Router>
     )
   }
