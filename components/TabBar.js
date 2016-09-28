@@ -10,10 +10,12 @@ export default class TabBar extends Component {
   }
 
   changedTab(index) {
-    let oldIndex = this.state.activeTab;
-    this.refs['tabsContainer' + oldIndex].setState({ color: this.props.iconColor });
-    this.refs['tabsContainer' + index].setState({ color: this.props.activeIconColor });
-    this.setState({activeTab: index});
+    if (this.state.activeTab !== index) {
+      let oldIndex = this.state.activeTab;
+      this.refs['tabsContainer' + oldIndex].setState({ color: this.props.iconColor });
+      this.refs['tabsContainer' + index].setState({ color: this.props.activeIconColor });
+      this.setState({activeTab: index});
+    }
   }
 
   componentDidMount() {
